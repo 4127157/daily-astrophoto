@@ -1,4 +1,8 @@
-export function Photo(){
-    let sourceURL = 'https://apod.nasa.gov/apod/image/2211/GenesisImpact_nasa_960.jpg'; 
+interface PhotoProps {
+    url: string | undefined,
+}
+
+export function Photo(props: PhotoProps){
+    let sourceURL = props.url;
     return <img src={sourceURL}/>;
 }
