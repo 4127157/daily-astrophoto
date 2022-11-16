@@ -3,10 +3,28 @@
 }
 
 .mainImg {
-    position:absolute;
+    position:fixed;
     top:0%;
     left:0%;
     max-width:100%;
     min-width: 100%;
     height:auto;
+    z-index: -1;
+}
+
+.heading {
+    margin: 0;
+    padding-block-start: 0.67em;
+    padding-block-end: 0.67em;
+    background-image:linear-gradient(    
+    rgba(0,0,0,0.9) 5%,    
+    rgba(0,0,0,0.7) 40%,    
+    rgba(0,0,0, 0.6) 65%,     
+    rgba(0,0,0,0.1) 90%, 
+    rgba(0,0,0,0));
+}
+
+.info {
+    margin-top:98vh;
+    background: black;
 }

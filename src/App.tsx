@@ -2,6 +2,7 @@ import type { Component } from 'solid-js';
 import { createSignal } from 'solid-js';
 import { Photo } from './components/Photo';
 import { Loader } from './components/Loader';
+import { InfoComp } from './components/InfoComp';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
@@ -39,11 +40,16 @@ const App: Component = () => {
     })
     .then(imgBlob => {
         const imgBlobURL = URL.createObjectURL(imgBlob);
-        setElem(<Photo url={imgBlobURL} class={styles.mainImg}/>);
+        if(photoMeta){
+            setElem(<>
+                <Photo url={imgBlobURL}/>
+                <InfoComp metadata={photoMeta}/>
+            </>);
+        }
     });
   return (
     <div class={styles.App}>
-       <h1>Astronomy Photo of The Day</h1>
+       <h1 class={styles.heading}>Astronomy Photo of The Day</h1>
        {elem()}
     </div>
   );
