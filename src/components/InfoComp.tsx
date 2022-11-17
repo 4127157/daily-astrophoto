@@ -8,10 +8,22 @@ interface InfoProps {
 }
 
 export function InfoComp(props: InfoProps) {
-    let title = props.metadata.title;
-    return (<div class={styles.info}>
+    console.log(props.metadata);
+    //hdurl and copyright in span
+    return (
+    <div class={styles.info}>
         <h2>{props.metadata.title}</h2>
         <span>MORE INFO</span>
         <span>^</span>
+        <p>{props.metadata.explanation}</p>
+        {props.metadata.hdurl ? 
+            <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :
+            <a href={props.metadata.url}target='_blank' ><button>View Full Image</button></a>}
+        <span>DATE: {props.metadata.date}</span>
+        <span>API VERSION: {props.metadata.service_version}</span>
+        <span>IMAGE URL: {props.metadata.url}</span>
+        {props.metadata.hdurl ? <span>HD IMAGE URL: {props.metadata.hdurl}</span> : <></>}
+        {props.metadata.copyright ? <span>COPYRIGHT: {props.metadata.copyright}</span> : <></>}
+
     </div>);
 }

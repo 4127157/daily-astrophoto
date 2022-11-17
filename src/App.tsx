@@ -19,17 +19,26 @@ const App: Component = () => {
     const timeoutId = setTimeout(() => controller.abort(), 10000);
     const CORS_PROXY_URL = 'https://corsproxy.io/?'; //May be subject to limits or change, not required in final deploy
     //Alternative - cors.sh 
+    const API_URL = "https://apod.as93.net/apod";
 
     
-    fetch("https://apod.as93.net/apod", { signal: controller.signal })
+    fetch(API_URL, { signal: controller.signal })
     .then(res => res.json())
     .then(data => {
         clearTimeout(timeoutId);
-        photoMeta = {...data}; //Deep copying isn't required in v1 but if it is JSON.parse(JSON.stringify(data)) should make it work
+        photoMeta = {...data}; 
+        //Deep copying isn't required in v1 but if it is JSON.parse(JSON.stringify(data)) should make it work
+        
         if(photoMeta){
-            delete photoMeta.hdurl;
+            photoMeta.api_url = API_URL;
         }
-        let formattedURL = `${CORS_PROXY_URL + encodeURIComponent(data.hdurl)}`;
+
+        let formattedURL = '';
+        if(data.hdurl) {
+            formattedURL = `${CORS_PROXY_URL + encodeURIComponent(data.hdurl)}`;
+        } else { 
+            formattedURL = `${CORS_PROXY_URL + encodeURIComponent(data.url)}`;
+        }
         return fetch(formattedURL, { 
             signal: controller.signal,
             /*mode: "cors"*/});
