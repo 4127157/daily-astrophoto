@@ -25,6 +25,12 @@
 }
 
 .info {
-    margin-top:98vh;
-    background: black;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.infoClickable {
+    padding: 1em;
 }
