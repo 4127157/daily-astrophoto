@@ -28,9 +28,25 @@
     width: 100%;
     position: fixed;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
 }
 
 .infoClickable {
-    padding: 1em;
+    padding: 0.5em;
+    background-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.1) 8%,
+    rgba(0,0,0,0.75) 40%);
+}
+
+.infoHeader {
+    margin: 0 0 0.5em 0;
+
+}
+/*Have to add animation*/ 
+.infoExpand {
+    display: inline-block;
+    margin:0;
+    /* opacity:0; */
+    background: rgba(0,0,0,0.75);
 }
