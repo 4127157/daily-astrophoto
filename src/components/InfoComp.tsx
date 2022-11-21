@@ -1,5 +1,7 @@
-import { createSignal } from 'solid-js';
+import { createSignal, Match, Switch } from 'solid-js';
 import { Show } from 'solid-js';
+import ExpandMoreIcon from '@suid/icons-material/ExpandMore';
+import ExpandLessIcon from '@suid/icons-material/ExpandLess';
 
 import styles from '../App.module.css';
 type AnyObj =  {
@@ -13,15 +15,26 @@ interface InfoProps {
 export function InfoComp(props: InfoProps) {
     console.log(props.metadata);
     //hdurl and copyright in span
-    const [clicked, setClicked] = createSignal(false);
+    // const [clicked, setClicked] = createSignal(false);
+    const [toggle, setToggle] = createSignal(false);
     return (
     <div class={styles.info}>
-        <div class={styles.infoClickable} onClick={() => setClicked(true)}>
+        <div class={styles.infoClickable} onClick={() =>{
+                setToggle(!toggle());
+            }}>
             <h2 class={styles.infoHeader}>{props.metadata.title}</h2>
             <span>MORE INFO</span>
-            <span>^</span>
+            <Switch>
+                <Match when={toggle() === true}>
+                    <ExpandLessIcon/>
+                </Match>
+                <Match when={toggle() === false}>
+                    <ExpandMoreIcon/>
+                </Match>
+            </Switch>
+            
         </div>
-        <Show when={clicked() === true}>
+        <Show when={toggle() === true}>
         <div class={styles.infoExpand}>
             <p>{props.metadata.explanation}</p>
             {props.metadata.hdurl ? 
