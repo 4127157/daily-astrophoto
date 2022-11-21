@@ -26,10 +26,10 @@ export function InfoComp(props: InfoProps) {
             <span>MORE INFO</span>
             <Switch>
                 <Match when={toggle() === true}>
-                    <ExpandLessIcon/>
+                    <ExpandMoreIcon style={ 'display: block; margin:auto;'}  class={styles.infoMaterialExpand}/>
                 </Match>
                 <Match when={toggle() === false}>
-                    <ExpandMoreIcon/>
+                    <ExpandLessIcon style={ 'display: block; margin:auto;'} class={styles.infoMaterialExpand}/>
                 </Match>
             </Switch>
             
