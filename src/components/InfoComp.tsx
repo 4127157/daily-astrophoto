@@ -26,26 +26,26 @@ export function InfoComp(props: InfoProps) {
             <span>MORE INFO</span>
             <Switch>
                 <Match when={toggle() === true}>
-                    <ExpandMoreIcon style={ 'display: block; margin:auto;'}  class={styles.infoMaterialExpand}/>
+                    <ExpandMoreIcon sx={{ fontSize: 40 }} style={ 'display: block; margin:auto;'}  class={styles.infoMaterialExpand}/>
                 </Match>
                 <Match when={toggle() === false}>
-                    <ExpandLessIcon style={ 'display: block; margin:auto;'} class={styles.infoMaterialExpand}/>
+                    <ExpandLessIcon sx={{ fontSize: 40 }} style={ 'display: block; margin:auto;'} class={styles.infoMaterialExpand}/>
                 </Match>
             </Switch>
             
         </div>
         <Show when={toggle() === true}>
         <div class={styles.infoExpand}>
-            <p>{props.metadata.explanation}</p>
+            <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
             {props.metadata.hdurl ? 
                 <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :
                 <a href={props.metadata.url}target='_blank' ><button>View Full Image</button></a>}
             <div>
                 <span>DATE: {props.metadata.date}</span>
                 <span>API VERSION: {props.metadata.service_version}</span>
+                {props.metadata.copyright ? <span>COPYRIGHT: {props.metadata.copyright}</span> : <></>}
                 <span>IMAGE URL: {props.metadata.url}</span>
                 {props.metadata.hdurl ? <span>HD IMAGE URL: {props.metadata.hdurl}</span> : <></>}
-                {props.metadata.copyright ? <span>COPYRIGHT: {props.metadata.copyright}</span> : <></>}
             </div>
         </div>
         </Show>

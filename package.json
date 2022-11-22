@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/animejs": "^3.1.6",
     "typescript": "^4.8.2",
     "vite": "^3.0.9",
     "vite-plugin-solid": "^2.3.0"
@@ -19,6 +20,7 @@
     "@suid/material": "^0.7.0",
     "@suid/styled-engine": "^0.3.0",
     "@suid/system": "^0.6.0",
+    "animejs": "^3.2.1",
     "solid-js": "^1.5.1"
   }
 }

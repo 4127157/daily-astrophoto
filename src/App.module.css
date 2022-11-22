@@ -6,10 +6,11 @@
     position:fixed;
     top:0%;
     left:0%;
-    max-width:100%;
-    min-width: 100%;
-    height:auto;
+    max-width: 100%;
+    height: auto;
     z-index: -1;
+
+    /*Change height and width policy for different aspect ratios*/
 }
 
 .heading {
@@ -28,6 +29,9 @@
     width: 100%;
     position: fixed;
     bottom: 0;
+    max-height: 50vh;
+    /*overflow-y: scroll;*/
+    /*Hide until expand then show custom*/
 }
 
 .infoClickable {
@@ -52,8 +56,12 @@
 }
 
 .infoMaterialExpand {
-    display: block;
     animation: expand 0.5s;
+}
+
+.infoExplanation {
+    margin: 0;
+    margin-bottom: 0.75em;
 }
 
 @keyframes expand {
@@ -64,3 +72,5 @@
         rotate: 0deg;
     }
 }
+
+
