@@ -2,6 +2,7 @@ import { createSignal, Match, Switch } from 'solid-js';
 import { Show } from 'solid-js';
 import ExpandMoreIcon from '@suid/icons-material/ExpandMore';
 import ExpandLessIcon from '@suid/icons-material/ExpandLess';
+import anime from 'animejs/lib/anime.es.js';
 
 import styles from '../App.module.css';
 type AnyObj =  {
@@ -17,9 +18,26 @@ export function InfoComp(props: InfoProps) {
     //hdurl and copyright in span
     // const [clicked, setClicked] = createSignal(false);
     const [toggle, setToggle] = createSignal(false);
+    let infoDiv!: HTMLDivElement; 
+
+    function playAnim(close: boolean) {
+        let animation = anime({
+            targets: infoDiv,
+            translateY: () => {
+                if(!close) {
+                    return '-50%';
+                } else {
+                    return '0';
+                }
+            },
+            duration:1500,
+            });
+        animation.play;
+    }
     return (
-    <div class={styles.info}>
+    <div class={styles.info} ref={infoDiv} >
         <div class={styles.infoClickable} onClick={() =>{
+                playAnim(toggle());
                 setToggle(!toggle());
             }}>
             <h2 class={styles.infoHeader}>{props.metadata.title}</h2>
