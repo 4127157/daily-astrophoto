@@ -19,6 +19,7 @@ export function InfoComp(props: InfoProps) {
     // const [clicked, setClicked] = createSignal(false);
     const [toggle, setToggle] = createSignal(false);
     let infoDiv!: HTMLDivElement; 
+    const [infoExpandDiv, setInfoExpandDiv] = createSignal(null);
 
     function playAnim(close: boolean) {
         let animation = anime({
@@ -34,6 +35,13 @@ export function InfoComp(props: InfoProps) {
             });
         animation.play;
     }
+
+    let infoExpandAnimation = anime({
+        targets: infoExpandDiv(),
+        opacity: 1,
+        duration: 500
+    });
+
     return (
     <div class={styles.info} ref={infoDiv} >
         <div class={styles.infoClickable} onClick={() =>{
@@ -53,7 +61,7 @@ export function InfoComp(props: InfoProps) {
             
         </div>
         <Show when={toggle() === true}>
-        <div class={styles.infoExpand}>
+        <div class={styles.infoExpand} ref={setInfoExpandDiv} >
             <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
             {props.metadata.hdurl ? 
                 <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :

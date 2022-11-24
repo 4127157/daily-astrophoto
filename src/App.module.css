@@ -53,6 +53,7 @@
     margin:0;
     /* opacity:0; */
     background: rgba(0,0,0,0.75);
+    opacity: 0;
 }
 
 .infoMaterialExpand {
