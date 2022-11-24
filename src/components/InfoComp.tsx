@@ -19,7 +19,8 @@ export function InfoComp(props: InfoProps) {
     // const [clicked, setClicked] = createSignal(false);
     const [toggle, setToggle] = createSignal(false);
     let infoDiv!: HTMLDivElement; 
-    const [infoExpandDiv, setInfoExpandDiv] = createSignal(null);
+    const [infoExpandDiv, setInfoExpandDiv]: [any, any] = createSignal(undefined);
+    // let infoExpandDiv!: HTMLDivElement;
 
     function playAnim(close: boolean) {
         let animation = anime({
@@ -32,15 +33,36 @@ export function InfoComp(props: InfoProps) {
                 }
             },
             duration:1500,
+            easing: 'easeInOutQuad',
             });
+
         animation.play;
     }
 
-    let infoExpandAnimation = anime({
-        targets: infoExpandDiv(),
-        opacity: 1,
-        duration: 500
-    });
+    function playInfoExpandAnim(elem: HTMLDivElement){
+    
+        let infoExpandAnimation = anime({
+            targets: elem,
+            opacity: 1,
+            duration: 500,
+            easing: 'easeInOutSine'
+        });
+
+        infoExpandAnimation.play;
+    }
+   /*TODO: 
+    * Due to either SolidJS design or lack of documentation,
+    * the animation will have to be hacked together where when the duration for
+    * the material button animation is over, a timeout function activates the
+    * animejs animation for translateY on infoDiv which then sets a signal true
+    * that allows Show for infoExpand to be true and put it in the DOM, after
+    * that happens, the element fades into view. 
+    * So,
+    * material button changes -> animejs translateY for info -> info translate
+    * gives a callback -> callback sets show condition true -> populates
+    * element in DOM with 0 opacity -> animejs animation to fade in opacity for
+    * infoExpandDiv
+    * */
 
     return (
     <div class={styles.info} ref={infoDiv} >
@@ -61,7 +83,7 @@ export function InfoComp(props: InfoProps) {
             
         </div>
         <Show when={toggle() === true}>
-        <div class={styles.infoExpand} ref={setInfoExpandDiv} >
+        <div class={styles.infoExpand} ref={el => { playInfoExpandAnim(el); setInfoExpandDiv(el);}} >
             <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
             {props.metadata.hdurl ? 
                 <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :
