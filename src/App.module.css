@@ -6,9 +6,10 @@
     position:fixed;
     top:0%;
     left:0%;
-    max-width: 100%;
-    min-height: 100%;
-    height: auto;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: 100% 0;
     z-index: -1;
 
     /*Change height and width policy for different aspect ratios*/
@@ -56,12 +57,16 @@
 }
 /*Have to add animation*/ 
 .infoExpand {
+    height: 0px;
     position: absolute;
     width: 100%;
     margin:0;
     /* opacity:0; */
-    background: rgba(0,0,0,0.75);
-    opacity: 0;
+    background-color: rgba(0,0,0,0.75);
+}
+
+.infoExpandChild {
+    opacity: -1;
 }
 
 .infoMaterialExpand {

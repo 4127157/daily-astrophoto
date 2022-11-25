@@ -33,37 +33,34 @@ export function InfoComp(props: InfoProps) {
                     return '0';
                 }
             },
-            duration:1500,
-            easing: 'easeInOutQuad',
+            duration:500,
+            easing: 'easeInOutCirc',
             });
 
         animation.play;
+        animation.finished.then(() => setAnimComplete(!animComplete()));
     }
 
     function playInfoExpandAnim(elem: HTMLDivElement){
+        // console.log(elem.children[0]);
     
         let infoExpandAnimation = anime({
             targets: elem,
-            opacity: 1,
+            height: '100px',
             duration: 500,
             easing: 'easeInOutSine'
         });
 
+        let infoInternalAnim = anime({
+            targets: elem.children[0],
+            opacity: '1',
+            duration: 2000,
+            easing: 'easeInCirc'
+        });
+
         infoExpandAnimation.play;
+        infoInternalAnim.play;
     }
-   /*TODO: 
-    * Due to either SolidJS design or lack of documentation,
-    * the animation will have to be hacked together where when the duration for
-    * the material button animation is over, a timeout function activates the
-    * animejs animation for translateY on infoDiv which then sets a signal true
-    * that allows Show for infoExpand to be true and put it in the DOM, after
-    * that happens, the element fades into view. 
-    * So,
-    * material button changes -> animejs translateY for info -> info translate
-    * gives a callback -> callback sets show condition true -> populates
-    * element in DOM with 0 opacity -> animejs animation to fade in opacity for
-    * infoExpandDiv
-    * */
 
     return (
     <div class={styles.info} ref={infoDiv} >
@@ -74,26 +71,28 @@ export function InfoComp(props: InfoProps) {
             <h2 class={styles.infoHeader}>{props.metadata.title}</h2>
             <span>MORE INFO</span>
             <Switch>
-                <Match when={toggle() === true}>
+                <Match when={animComplete() === true}>
                     <ExpandMoreIcon sx={{ fontSize: 40 }} style={ 'display: block; margin:auto;'}  class={styles.infoMaterialExpand}/>
                 </Match>
-                <Match when={toggle() === false}>
+                <Match when={animComplete() === false}>
                     <ExpandLessIcon sx={{ fontSize: 40 }} style={ 'display: block; margin:auto;'} class={styles.infoMaterialExpand}/>
                 </Match>
             </Switch>
             
         </div>
-        <div class={styles.infoExpand} ref={el => { playInfoExpandAnim(el); setInfoExpandDiv(el);}} >
-            <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
-            {props.metadata.hdurl ? 
-                <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :
-                <a href={props.metadata.url}target='_blank' ><button>View Full Image</button></a>}
-            <div>
-                <span>DATE: {props.metadata.date}</span>
-                <span>API VERSION: {props.metadata.service_version}</span>
-                {props.metadata.copyright ? <span>COPYRIGHT: {props.metadata.copyright}</span> : <></>}
-                <span>IMAGE URL: {props.metadata.url}</span>
-                {props.metadata.hdurl ? <span>HD IMAGE URL: {props.metadata.hdurl}</span> : <></>}
+        <div class={styles.infoExpand} ref={el => { playInfoExpandAnim(el); setInfoExpandDiv(el); }}>
+            <div class={styles.infoExpandChild}>
+                <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
+                {props.metadata.hdurl ? 
+                    <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :
+                    <a href={props.metadata.url}target='_blank' ><button>View Full Image</button></a>}
+                <div>
+                    <span>DATE: {props.metadata.date}</span>
+                    <span>API VERSION: {props.metadata.service_version}</span>
+                    {props.metadata.copyright ? <span>COPYRIGHT: {props.metadata.copyright}</span> : <></>}
+                    <span>IMAGE URL: {props.metadata.url}</span>
+                    {props.metadata.hdurl ? <span>HD IMAGE URL: {props.metadata.hdurl}</span> : <></>}
+                </div>
             </div>
         </div>
     </div>);
