@@ -20,6 +20,7 @@ export function InfoComp(props: InfoProps) {
     const [toggle, setToggle] = createSignal(false);
     let infoDiv!: HTMLDivElement; 
     const [infoExpandDiv, setInfoExpandDiv]: [any, any] = createSignal(undefined);
+    const [animComplete, setAnimComplete] = createSignal(false, {equals: false});
     // let infoExpandDiv!: HTMLDivElement;
 
     function playAnim(close: boolean) {
@@ -27,7 +28,7 @@ export function InfoComp(props: InfoProps) {
             targets: infoDiv,
             translateY: () => {
                 if(!close) {
-                    return '-50%';
+                    return '-40vh';
                 } else {
                     return '0';
                 }
@@ -82,7 +83,6 @@ export function InfoComp(props: InfoProps) {
             </Switch>
             
         </div>
-        <Show when={toggle() === true}>
         <div class={styles.infoExpand} ref={el => { playInfoExpandAnim(el); setInfoExpandDiv(el);}} >
             <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
             {props.metadata.hdurl ? 
@@ -96,6 +96,5 @@ export function InfoComp(props: InfoProps) {
                 {props.metadata.hdurl ? <span>HD IMAGE URL: {props.metadata.hdurl}</span> : <></>}
             </div>
         </div>
-        </Show>
     </div>);
 }

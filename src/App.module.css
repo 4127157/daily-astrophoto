@@ -38,6 +38,10 @@
 }
 
 .infoClickable {
+    display: block;
+    position: absolute;
+    width: 100%;
+    bottom: 0%;
     padding: 0.5em;
     background-image: linear-gradient(
     to bottom,
@@ -52,7 +56,8 @@
 }
 /*Have to add animation*/ 
 .infoExpand {
-    display: inline-block;
+    position: absolute;
+    width: 100%;
     margin:0;
     /* opacity:0; */
     background: rgba(0,0,0,0.75);
