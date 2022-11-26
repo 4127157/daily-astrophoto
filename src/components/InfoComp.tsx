@@ -47,8 +47,8 @@ export function InfoComp(props: InfoProps) {
         let infoExpandAnimation = anime({
             targets: elem,
             height: '100px',
-            duration: 500,
-            easing: 'easeInOutSine'
+            duration: 5000,
+            easing: 'easeInSine'
         });
 
         let infoInternalAnim = anime({
@@ -58,8 +58,8 @@ export function InfoComp(props: InfoProps) {
             easing: 'easeInCirc'
         });
 
-        infoExpandAnimation.play;
-        infoInternalAnim.play;
+        // infoExpandAnimation.play;
+        // infoInternalAnim.play;
     }
 
     return (
