@@ -1,4 +1,4 @@
-import { createSignal, Match, Switch } from 'solid-js';
+import { createEffect, createSignal, Match, onMount, Switch } from 'solid-js';
 import { Show } from 'solid-js';
 import ExpandMoreIcon from '@suid/icons-material/ExpandMore';
 import ExpandLessIcon from '@suid/icons-material/ExpandLess';
@@ -19,53 +19,40 @@ export function InfoComp(props: InfoProps) {
     // const [clicked, setClicked] = createSignal(false);
     const [toggle, setToggle] = createSignal(false);
     let infoDiv!: HTMLDivElement; 
-    const [infoExpandDiv, setInfoExpandDiv]: [any, any] = createSignal(undefined);
     const [animComplete, setAnimComplete] = createSignal(false, {equals: false});
-    // let infoExpandDiv!: HTMLDivElement;
+    let infoExpandDiv!: HTMLDivElement;
+    let infoExpandChildDiv!: HTMLDivElement;
 
-    function playAnim(close: boolean) {
-        let animation = anime({
-            targets: infoDiv,
-            translateY: () => {
-                if(!close) {
-                    return '-40vh';
-                } else {
-                    return '0';
-                }
-            },
-            duration:500,
-            easing: 'easeInOutCirc',
-            });
+    function processAnimations(close: boolean){
+        playAnim(close);
+        function playAnim(close: boolean) {
+            let animation = anime({
+                targets: infoDiv,
+                translateY: () => {
+                    if(!close) {
+                        return '-40vh';
+                    } else {
+                        return '0';
+                    }
+                },
+                duration:500,
+                easing: 'easeInOutCirc',
+                });
 
-        animation.play;
-        animation.finished.then(() => setAnimComplete(!animComplete()));
+            animation.play;
+            animation.finished.then(() => setAnimComplete(!animComplete()));
+        }
+        if(infoExpandDiv){
+            console.log(infoExpandDiv.offsetHeight);
+        }
     }
-
-    function playInfoExpandAnim(elem: HTMLDivElement){
-        // console.log(elem.children[0]);
     
-        let infoExpandAnimation = anime({
-            targets: elem,
-            height: '100px',
-            duration: 5000,
-            easing: 'easeInSine'
-        });
-
-        let infoInternalAnim = anime({
-            targets: elem.children[0],
-            opacity: '1',
-            duration: 2000,
-            easing: 'easeInCirc'
-        });
-
-        // infoExpandAnimation.play;
-        // infoInternalAnim.play;
-    }
+    createEffect(() => processAnimations(toggle()))
 
     return (
     <div class={styles.info} ref={infoDiv} >
         <div class={styles.infoClickable} onClick={() =>{
-                playAnim(toggle());
+                //playAnim(toggle());
                 setToggle(!toggle());
             }}>
             <h2 class={styles.infoHeader}>{props.metadata.title}</h2>
@@ -80,8 +67,8 @@ export function InfoComp(props: InfoProps) {
             </Switch>
             
         </div>
-        <div class={styles.infoExpand} ref={el => { playInfoExpandAnim(el); setInfoExpandDiv(el); }}>
-            <div class={styles.infoExpandChild}>
+        <div class={styles.infoExpand} ref={infoExpandDiv}>
+            <div class={styles.infoExpandChild} ref={infoExpandChildDiv}>
                 <p class={styles.infoExplanation}>{props.metadata.explanation}</p>
                 {props.metadata.hdurl ? 
                     <a href={props.metadata.hdurl} target='_blank'><button>View Full Image</button></a> :
