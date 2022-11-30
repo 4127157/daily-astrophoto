@@ -62,12 +62,20 @@ html {
 }
 /*Have to add animation*/ 
 .infoExpand {
+    text-align: center;
     opacity: 0;
     position: absolute;
     width: 100%;
     margin:0;
     /* opacity:0; */
     background-color: rgba(0,0,0,0.75);
+}
+
+@media screen and (max-width: 600px) {
+    .infoHeader {
+        font-size: 1.2em;
+        padding: 0 1em;
+    }
 }
 
 .infoExpandChild {
